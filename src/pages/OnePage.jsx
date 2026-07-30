@@ -5,6 +5,7 @@ import ArsenalGrid from "../components/ArsenalGrid"
 import Carousel from "../components/Carousel"
 import ProjectSlide from "../components/ProjectSlide"
 import ProductFeaturesGrid from "../components/ProductFeaturesGrid"
+import ContactForm from "../components/ContactForm"
 import { PROJECTS } from "../data/projects"
 import background from "../assets/images/background-brain-cyberpunk.jpg"
 import aboutPhoto from "../assets/images/anthony-profile.png"
@@ -251,6 +252,7 @@ function OnePage({ onSectionChange }) {
               </a>
             </li>
           </ul>
+          <ContactForm />
         </div>
       </section>
     </div>

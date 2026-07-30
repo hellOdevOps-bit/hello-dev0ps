@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
+
+const SWIPE_THRESHOLD = 40
 
 function Carousel({
   items,
@@ -7,6 +9,7 @@ function Carousel({
   labels = {},
 }) {
   const [index, setIndex] = useState(0)
+  const touchStart = useRef(null)
   const total = items.length
   const prevLabel = labels.prev ?? "Élément précédent"
   const nextLabel = labels.next ?? "Élément suivant"
@@ -21,9 +24,32 @@ function Carousel({
   const goPrev = () => setIndex((i) => (i === 0 ? total - 1 : i - 1))
   const goNext = () => setIndex((i) => (i === total - 1 ? 0 : i + 1))
 
+  const onTouchStart = (e) => {
+    const touch = e.touches[0]
+    touchStart.current = { x: touch.clientX, y: touch.clientY }
+  }
+
+  const onTouchEnd = (e) => {
+    if (!touchStart.current || total <= 1) return
+
+    const touch = e.changedTouches[0]
+    const dx = touch.clientX - touchStart.current.x
+    const dy = touch.clientY - touchStart.current.y
+    touchStart.current = null
+
+    if (Math.abs(dx) < SWIPE_THRESHOLD || Math.abs(dx) <= Math.abs(dy)) return
+
+    if (dx < 0) goNext()
+    else goPrev()
+  }
+
   return (
     <div className={`carousel ${className}`}>
-      <div className="carousel-track">
+      <div
+        className="carousel-track"
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+      >
         {items.map((item, i) => (
           <div
             key={i}

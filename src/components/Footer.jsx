@@ -1,0 +1,34 @@
+import logo from "../assets/logos/logoHDblancsansbg.png"
+import { LEGAL_LINKS } from "../data/nav"
+import { scrollToSection } from "../utils/scroll"
+
+function Footer() {
+  return (
+    <footer className="site-footer">
+      <div className="site-footer-main">
+        <a
+          href="#home"
+          className="logo-link"
+          aria-label="Retour en haut de page"
+          onClick={(e) => scrollToSection(e, "home")}
+        >
+          <img src={logo} alt="Hello_Dev0ps!" className="logo" />
+        </a>
+
+        <nav className="site-footer-legal" aria-label="Informations légales">
+          {LEGAL_LINKS.map(({ label, href }) => (
+            <a key={href} href={href}>
+              {label}
+            </a>
+          ))}
+        </nav>
+      </div>
+
+      <div className="site-footer-sub">
+        © 2026 Hello_Dev0ps! — Anthony EXARTIER. Tous droits réservés.
+      </div>
+    </footer>
+  )
+}
+
+export default Footer

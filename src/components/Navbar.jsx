@@ -1,26 +1,7 @@
 import { useRef, useLayoutEffect, useState } from "react"
 import logo from "../assets/logos/logoHDblancsansbg.png"
-
-const NAV_ITEMS = [
-  { label: "À propos", href: "#about" },
-  { label: "Services", href: "#services" },
-  { label: "Expertises", href: "#expertise" },
-  { label: "Projets", href: "#projects" },
-  { label: "Contact", href: "#contact" },
-]
-
-function getHeaderOffset() {
-  const header = document.querySelector(".app > header")
-  return header?.offsetHeight ?? 72
-}
-
-function scrollToSection(e, sectionId) {
-  e.preventDefault()
-  const el = document.getElementById(sectionId)
-  if (!el) return
-  const y = el.getBoundingClientRect().top + window.scrollY - getHeaderOffset()
-  window.scrollTo({ top: y, behavior: "smooth" })
-}
+import { NAV_ITEMS } from "../data/nav"
+import { scrollToSection } from "../utils/scroll"
 
 function Navbar({ activeSection = "home" }) {
   const navLinksRef = useRef(null)
